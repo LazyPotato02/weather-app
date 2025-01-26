@@ -1,30 +1,39 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {WeatherService} from './weather.service';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule],
+  imports: [FormsModule, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'weather-app';
 
-  constructor(private weatherService: WeatherService) { }
-
-  city = ''
-  woeid = ''
-  searchWeather () {
-    this.weatherService.getCity(this.city).subscribe(location => {
-      if (location && location.length > 0) {
-        this.woeid = location[0].woeid;
-
-        console.log(this.woeid);
-      }
-    })
+  constructor(private weatherService: WeatherService) {
   }
 
+  city = ''
+  weatherData: any = ''
+  errorMessage: string = '';
+  searchWeather() {
+    if (this.city) {
+      this.weatherService.getCity(this.city).subscribe(res => {
+        console.log(res)
+        this.weatherData = res;
+        this.errorMessage = '';
+      })
+    }
+    else{
+      this.errorMessage = 'City name cannot be empty!';
+      return;
+    }
+  }
+  getTimezone(offset: number): string {
+    const hours = offset / 3600; // Convert seconds to hours
+    return `UTC${hours >= 0 ? '+' : ''}${hours}`;
+  }
 
 }
