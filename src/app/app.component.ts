@@ -32,8 +32,8 @@ export class AppComponent {
     }
   }
   getTimezone(offset: number): string {
-    const hours = offset / 3600; // Convert seconds to hours
-    return `UTC${hours >= 0 ? '+' : ''}${hours}`;
+    const hours = offset / 3600;
+    return `UTC${hours >= 0 ? ' + ' : ''}${hours}`;
   }
 
 }

@@ -1,0 +1,73 @@
+/* General styling for the app */
+.weather-app {
+  font-family: Arial, sans-serif;
+  margin: 50px auto;
+  padding: 20px;
+  max-width: 600px;
+  background-color: #f4f4f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.app-title {
+  text-align: center;
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Input and button styling */
+.weather-input {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.weather-input input {
+  padding: 10px;
+  font-size: 1rem;
+  width: 70%;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.weather-input input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.weather-input button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.weather-input button:hover {
+  background-color: #0056b3;
+}
+
+/* Weather info styling */
+.weather-info {
+  background-color: #fff;
+  border-radius: 5px;
+  text-transform: capitalize;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.weather-info p strong {
+  color: #333;
+}

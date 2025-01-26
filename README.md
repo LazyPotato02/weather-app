@@ -1,59 +1,175 @@
-# WeatherApp
+# **Weather App Documentation**
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.4.
+## **Overview**
+The Weather App is a simple Angular application that allows users to search for current weather conditions by city. It uses the OpenWeatherMap API to fetch real-time weather data, such as temperature, wind speed, humidity, and more.
 
-## Development server
+---
 
-To start a local development server, run:
+## **Features**
+1. Search weather by city name.
+2. Display the following weather details:
+  - Country
+  - City name
+  - Weather description (e.g., "Broken Clouds")
+  - Wind speed and direction
+  - Coordinates (longitude and latitude)
+  - Temperature (current, max, min)
+  - Feels like temperature
+  - Humidity
+  - Pressure
+  - Timezone
+  - Sunrise and sunset times
+3. User-friendly UI with a responsive design.
+4. Data formatted in metric units (°C and km/h).
+5. Capitalized weather descriptions.
 
+---
+
+## **Technologies Used**
+- **Frontend**: Angular 16+
+- **Styling**: CSS
+- **API**: [OpenWeatherMap API](https://openweathermap.org/api)
+- **Languages**: TypeScript, HTML, CSS
+
+---
+
+## **Prerequisites**
+- Node.js installed on your system (v14+).
+- Angular CLI installed globally (`npm install -g @angular/cli`).
+- An OpenWeatherMap API key.
+
+---
+
+## **Installation**
+
+### 1. Clone the Repository
+```bash
+git clone <repository_url>
+cd weather-app
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Configure the OpenWeatherMap API Key
+- Open `weather.service.ts` in the `src/app` folder.
+- Replace `YOUR_API_KEY` with your OpenWeatherMap API key:
+  ```typescript
+  private API_KEY = 'YOUR_API_KEY';
+  ```
+
+### 4. Run the Application
 ```bash
 ng serve
 ```
+- Open the app in your browser: [http://localhost:4200](http://localhost:4200).
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+## **File Structure**
+```
+src/
+├── app/
+│   ├── app.component.ts         # Main component logic
+│   ├── app.component.html       # Main component template
+│   ├── app.component.css        # Main component styles
+│   ├── weather.service.ts       # Service for fetching weather data
+│   ├── app.module.ts            # Main module
+├── assets/                      # Static assets
+├── environments/                # Environment configuration
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
+## **How It Works**
+
+1. **User Input**: The user enters a city name in the search bar and clicks "Get Weather."
+2. **API Request**: The app sends an HTTP request to the OpenWeatherMap API to fetch weather data for the specified city.
+3. **Data Display**: The API response is processed, and the weather data is displayed in a card format.
+4. **Error Handling**: If the city is not found or there’s a network error, the app displays an appropriate error message.
+
+---
+
+## **API Integration**
+
+The app integrates with the OpenWeatherMap API using the `HttpClient` module in Angular.
+
+### Example API Call:
+```
+https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_KEY}&units=metric
 ```
 
-## Building
+- **Query Parameters**:
+  - `q`: City name (e.g., `London`).
+  - `appid`: Your API key.
+  - `units`: Metric system (`metric` for Celsius).
 
-To build the project run:
+---
 
-```bash
-ng build
+## **Key Components**
+
+### 1. **WeatherService (`weather.service.ts`)**
+Responsible for making HTTP requests to the OpenWeatherMap API and returning the response.
+
+```typescript
+getCity(city: string): Observable<any> {
+  return this.http.get<any>(
+    `${this.baseUrl}/weather?q=${city}&appid=${this.API_KEY}&units=metric`
+  );
+}
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### 2. **AppComponent (`app.component.ts`)**
+Handles user input, triggers API calls, and processes the API response.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## **Error Handling**
 
-```bash
-ng test
-```
+- Displays an error message when:
+  - The user enters an invalid city name.
+  - The OpenWeatherMap API is unreachable.
+  - The API key is invalid or not configured.
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## **Customizations**
 
-```bash
-ng e2e
-```
+1. **Change Units**:
+  - To use Fahrenheit, replace `units=metric` with `units=imperial` in `weather.service.ts`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+2. **Add More Data**:
+  - The OpenWeatherMap API provides additional fields (e.g., UV index, hourly forecast). Update the template to include these fields.
 
-## Additional Resources
+3. **Improve UI**:
+  - Use a CSS framework like Bootstrap or Material Design for more polished styling.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## **Future Improvements**
+
+1. Add hourly and daily weather forecasts.
+2. Implement geolocation to fetch the user's current weather.
+3. Use a chart library (e.g., Chart.js) to display temperature trends.
+4. Add a dark mode toggle for better user experience.
+
+---
+
+## **FAQ**
+
+### 1. Why am I getting a 401 Unauthorized error?
+- Ensure your API key is correctly configured in `weather.service.ts`.
+- Verify that your API key is active in the OpenWeatherMap dashboard.
+
+### 2. Why is the timezone or sunrise/sunset time incorrect?
+- Double-check the `timezone` field in the API response and ensure it's being applied correctly in the calculation.
+
+---
+
+## **License**
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+---
+
